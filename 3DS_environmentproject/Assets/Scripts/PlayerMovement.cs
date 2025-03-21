@@ -2,7 +2,7 @@
 
 public class PlayerMovement : MonoBehaviour
 {
-    public float moveSpeed = 5f;  // Velocidad del personaje
+    public float moveSpeed = 15f;  // Velocidad del personaje
 
     void Update()
     {
