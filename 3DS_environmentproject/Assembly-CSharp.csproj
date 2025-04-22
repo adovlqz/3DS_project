@@ -46,12 +46,18 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
-     <Compile Include="Assets\Scripts\PlayerMovement.cs" />
-     <Compile Include="Assets\Scripts\camera2obj.cs" />
+     <Compile Include="Assets\3DS_project\GDD.cs" />
+     <Compile Include="Assets\3DS_project\notes.cs" />
+     <Compile Include="Assets\Scripts\CameraFollow.cs" />
+     <Compile Include="Assets\Scripts\CharacterAnimationController.cs" />
+     <Compile Include="Assets\Scripts\controller.cs" />
+     <Compile Include="Assets\Scripts\movemetlogic.cs" />
      <Compile Include="Assets\Scripts\shadow.cs" />
      <Compile Include="Assets\SkyboxExample\Tilt.cs" />
      <Compile Include="Assets\SkyboxExample\Tumble.cs" />
      <None Include="Assets\SkyboxExample\3DS_Skybox.shader" />
+     <None Include="Assets\models\Materials\DitherTextureTransparent.shader" />
+     <None Include="Assets\models\Materials\Xray.shader" />
  <Reference Include="UnityEngine.UI">
  <HintPath>C:/Program Files/Unity/Editor/Data/UnityExtensions/Unity/GUISystem/UnityEngine.UI.dll</HintPath>
  </Reference>

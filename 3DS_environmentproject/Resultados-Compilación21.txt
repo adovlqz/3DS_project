@@ -1,0 +1,4 @@
+﻿Operación Compilar iniciada..
+1>------ Operación Compilar iniciada: proyecto: Assembly-CSharp, configuración: Debug Any CPU ------
+1>  Assembly-CSharp -> C:\3DS_PROJECT\3DS_project\3DS_environmentproject\Temp\bin\Debug\Assembly-CSharp.dll
+========== Compilar: 1 correctos, 0 incorrectos, 0 actualizados, 0 omitidos ==========
