@@ -1,4 +1,5 @@
 ﻿using UnityEngine;
+using UnityEngine.N3DS; // Asegúrate que esté disponible en tu Unity
 
 [RequireComponent(typeof(Rigidbody))]
 public class movemetlogic : MonoBehaviour
@@ -16,6 +17,8 @@ public class movemetlogic : MonoBehaviour
     private Rigidbody rb;
     private Collider col;
 
+    private Vector3 direction;
+
     void Start()
     {
         anim = GetComponent<Animator>();
@@ -23,7 +26,6 @@ public class movemetlogic : MonoBehaviour
         col = GetComponent<Collider>();
         rb.useGravity = false;
         rb.isKinematic = false;
-        rb.constraints = RigidbodyConstraints.FreezeRotation;
 
         if (noFrictionMaterial != null && col != null)
         {
@@ -33,10 +35,47 @@ public class movemetlogic : MonoBehaviour
 
     void Update()
     {
-        float rawX = Input.GetAxisRaw("Horizontal");
-        float rawZ = Input.GetAxisRaw("Vertical");
-        Vector3 direction = new Vector3(rawX, 0, rawZ).normalized;
+        // AQUÍ CAMBIA la forma de leer los inputs
+        Vector2 circlePad = GamePad.GetCirclePad();
 
+        float rawX = circlePad.x;
+        float rawZ = circlePad.y;
+
+        // Si quieres que solo responda a entradas fuertes, puedes seguir usando thresholds
+        if (Mathf.Abs(rawX) < 0.1f) rawX = 0f;
+        if (Mathf.Abs(rawZ) < 0.1f) rawZ = 0f;
+
+        // Crear vector de entrada basado en inputs
+        Vector3 inputDirection = new Vector3(rawX, 0, rawZ).normalized;
+
+        // Obtener dirección de la cámara
+        Camera playerCamera = Camera.main;
+        if (playerCamera != null)
+        {
+            Vector3 cameraForward = playerCamera.transform.forward;
+            cameraForward.y = 0f;
+            cameraForward.Normalize();
+
+            Vector3 cameraRight = playerCamera.transform.right;
+            cameraRight.y = 0f;
+            cameraRight.Normalize();
+
+            Vector3 movementDirection = cameraForward * rawZ + cameraRight * rawX;
+            movementDirection.Normalize();
+
+            direction = movementDirection;
+        }
+        else
+        {
+            direction = inputDirection;
+        }
+
+        if (anim != null)
+            anim.SetFloat("Speed", direction.magnitude);
+    }
+
+    void FixedUpdate()
+    {
         if (direction.magnitude >= moveThreshold)
         {
             Vector3 velocity = direction * velocitymov;
@@ -46,27 +85,27 @@ public class movemetlogic : MonoBehaviour
                 velocity = velocity.normalized * maxSpeed;
             }
 
-            float targetVelX = Mathf.MoveTowards(rb.velocity.x, velocity.x, decelerationX * Time.deltaTime);
-            float targetVelZ = Mathf.MoveTowards(rb.velocity.z, velocity.z, decelerationZ * Time.deltaTime);
+            float targetVelX = Mathf.MoveTowards(rb.velocity.x, velocity.x, decelerationX * Time.fixedDeltaTime);
+            float targetVelZ = Mathf.MoveTowards(rb.velocity.z, velocity.z, decelerationZ * Time.fixedDeltaTime);
 
             rb.velocity = new Vector3(targetVelX, rb.velocity.y, targetVelZ);
 
             if (direction.magnitude >= 0.1f)
             {
                 Quaternion targetRotation = Quaternion.LookRotation(direction);
-                transform.rotation = Quaternion.Slerp(transform.rotation, targetRotation, rotationSpeed * Time.deltaTime);
+                transform.rotation = Quaternion.Slerp(transform.rotation, targetRotation, rotationSpeed * Time.fixedDeltaTime);
             }
         }
         else
         {
             rb.velocity = new Vector3(
-                Mathf.MoveTowards(rb.velocity.x, 0, decelerationX * Time.deltaTime),
+                Mathf.MoveTowards(rb.velocity.x, 0, decelerationX * Time.fixedDeltaTime),
                 rb.velocity.y,
-                Mathf.MoveTowards(rb.velocity.z, 0, decelerationZ * Time.deltaTime)
+                Mathf.MoveTowards(rb.velocity.z, 0, decelerationZ * Time.fixedDeltaTime)
             );
         }
 
-        // ===== Ajuste de altura con Raycast para evitar que el personaje se hunda o flote =====
+        // Ajuste de altura con Raycast
         RaycastHit hit;
         Vector3 rayOrigin = transform.position + Vector3.up * 0.1f;
         if (Physics.Raycast(rayOrigin, Vector3.down, out hit, 1f))
@@ -75,27 +114,5 @@ public class movemetlogic : MonoBehaviour
             pos.y = hit.point.y;
             transform.position = pos;
         }
-
-        // Parámetro de velocidad para el Animator
-        anim.SetFloat("Speed", direction.magnitude);
-
-        // Debug
-        Debug.Log("Movimiento X: " + rawX + " | Z: " + rawZ + " | Magnitud: " + direction.magnitude);
-    }
-
-    // Eliminamos la restricción artificial en Y, ya que ahora usamos raycast
-    void OnCollisionStay(Collision collision)
-    {
-        Debug.Log("El personaje sigue en contacto con: " + collision.gameObject.name);
-    }
-
-    void OnCollisionEnter(Collision collision)
-    {
-        Debug.Log("Colisión detectada con: " + collision.gameObject.name);
-    }
-
-    void OnCollisionExit(Collision collision)
-    {
-        Debug.Log("El personaje ha dejado de colisionar con: " + collision.gameObject.name);
     }
 }

@@ -48,6 +48,8 @@
   <ItemGroup>
      <Compile Include="Assets\3DS_project\GDD.cs" />
      <Compile Include="Assets\3DS_project\notes.cs" />
+     <Compile Include="Assets\GamepadExample\GamepadScript.cs" />
+     <Compile Include="Assets\Scripts\ButtonTest3DS.cs" />
      <Compile Include="Assets\Scripts\CameraFollow.cs" />
      <Compile Include="Assets\Scripts\CharacterAnimationController.cs" />
      <Compile Include="Assets\Scripts\controller.cs" />
@@ -55,6 +57,10 @@
      <Compile Include="Assets\Scripts\shadow.cs" />
      <Compile Include="Assets\SkyboxExample\Tilt.cs" />
      <Compile Include="Assets\SkyboxExample\Tumble.cs" />
+     <Compile Include="Assets\lowerdisplay\BackgroundManager.cs" />
+     <Compile Include="Assets\lowerdisplay\LeftTreeManager.cs" />
+     <Compile Include="Assets\lowerdisplay\RightTreeManager.cs" />
+     <Compile Include="Assets\lowerdisplay\TreeSlide.cs" />
      <None Include="Assets\SkyboxExample\3DS_Skybox.shader" />
      <None Include="Assets\models\Materials\DitherTextureTransparent.shader" />
      <None Include="Assets\models\Materials\Xray.shader" />
