@@ -69,7 +69,17 @@ note for character and movement
  
  
  
- 
+ Botón 3DS | KeyCode | Input.GetKey("name")
+A | KeyCode.A | "a"
+B | KeyCode.B | "b"
+X | KeyCode.X | "x"
+Y | KeyCode.Y | "y"
+L | KeyCode.L | "l"
+R | KeyCode.R | "r"
+ZL | KeyCode.LeftAlt | "left alt"
+ZR | KeyCode.RightAlt | "right alt"
+Start | KeyCode.Return | "return"
+D-Pad | KeyCode.UpArrow / etc. | "up", "down", etc.
  
  
  

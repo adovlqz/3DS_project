@@ -1,5 +1,6 @@
 ﻿using UnityEngine;
-using UnityEngine.N3DS; // Asegúrate que esté disponible en tu Unity
+// usando GamePad está comentado porque aún no lo tienes habilitado
+// using UnityEngine.N3DS;
 
 [RequireComponent(typeof(Rigidbody))]
 public class movemetlogic : MonoBehaviour
@@ -35,20 +36,29 @@ public class movemetlogic : MonoBehaviour
 
     void Update()
     {
-        // AQUÍ CAMBIA la forma de leer los inputs
-        Vector2 circlePad = GamePad.GetCirclePad();
+        // Simulación del Circle Pad (3DS) usando teclas del teclado
+        float rawX = 0f;
+        float rawZ = 0f;
 
-        float rawX = circlePad.x;
-        float rawZ = circlePad.y;
+        // Soporte para teclado numérico (como en la 3DS)
+        if (Input.GetKey(KeyCode.Keypad4)) rawX = -1f;
+        if (Input.GetKey(KeyCode.Keypad6)) rawX = 1f;
+        if (Input.GetKey(KeyCode.Keypad8)) rawZ = 1f;
+        if (Input.GetKey(KeyCode.Keypad2)) rawZ = -1f;
 
-        // Si quieres que solo responda a entradas fuertes, puedes seguir usando thresholds
+        // Alternativa para testear en PC con WASD
+        if (Input.GetKey(KeyCode.A)) rawX = -1f;
+        if (Input.GetKey(KeyCode.D)) rawX = 1f;
+        if (Input.GetKey(KeyCode.W)) rawZ = 1f;
+        if (Input.GetKey(KeyCode.S)) rawZ = -1f;
+
+        // Umbral para ignorar entradas pequeñas
         if (Mathf.Abs(rawX) < 0.1f) rawX = 0f;
         if (Mathf.Abs(rawZ) < 0.1f) rawZ = 0f;
 
-        // Crear vector de entrada basado en inputs
         Vector3 inputDirection = new Vector3(rawX, 0, rawZ).normalized;
 
-        // Obtener dirección de la cámara
+        // Dirección según cámara
         Camera playerCamera = Camera.main;
         if (playerCamera != null)
         {

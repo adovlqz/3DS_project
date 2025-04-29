@@ -36,11 +36,14 @@ public class CameraFollow : MonoBehaviour
 
     private void HandleInput()
     {
-        if (Input.GetKeyDown(KeyCode.JoystickButton4)) // L
+        // Botón L (3DS = KeyCode.L, PC = tecla Q)
+        if (Input.GetKeyDown(KeyCode.L) || Input.GetKeyDown(KeyCode.Q))
         {
             targetRotationY -= 90f;
         }
-        if (Input.GetKeyDown(KeyCode.JoystickButton5)) // R
+
+        // Botón R (3DS = KeyCode.R, PC = tecla E)
+        if (Input.GetKeyDown(KeyCode.R) || Input.GetKeyDown(KeyCode.E))
         {
             targetRotationY += 90f;
         }

@@ -3,7 +3,7 @@
   <Contents>
     <ContentsInfo>
       <Title>GameName</Title>
-      <ExtendedMode>true</ExtendedMode>
+      <ExtendedMode>false</ExtendedMode>
       <RomFsInfo>
         <Root>C:\3DS_PROJECT\3DS_project\3DS_environmentproject\Temp\StagingArea\RomFS</Root>
         <Files>
@@ -21,7 +21,7 @@
       </RomFsInfo>
       <CodeInfo>
         <Compressed>false</Compressed>
-        <OriginalSize>22,712,320 byte</OriginalSize>
+        <OriginalSize>22,716,416 byte</OriginalSize>
       </CodeInfo>
     </ContentsInfo>
   </Contents>
